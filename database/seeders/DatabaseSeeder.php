@@ -18,5 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             PizzaSeeder::class,
         ]);
+
+        \App\Models\Review::factory(15001)->create();
     }
 }

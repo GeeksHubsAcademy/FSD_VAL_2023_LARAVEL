@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PizzaController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -38,6 +39,9 @@ Route::post('/pizzas', [PizzaController::class, 'createPizza']);
 Route::put('/pizzas/{id}', [PizzaController::class, 'updatePizza']);
 Route::delete('/pizzas/{id}', [PizzaController::class, 'deletePizza']);
 Route::get('/pizzas/{id}', [PizzaController::class, 'getPizzaById']);
+
+// AUTH
+Route::post('/register', [AuthController::class, 'register']);
 
 
 

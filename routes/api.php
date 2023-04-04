@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PizzaController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -24,7 +25,14 @@ Route::get('/', function () {
     return "Bienvenidos al ultimo lunes";
 });
 
+
+// USERS
 Route::get('/users', [UserController::class, 'getUsers']);
 Route::post('/users', [UserController::class, 'createUser']);
 Route::put('/users', [UserController::class, 'updateUser']);
 Route::delete('/users', [UserController::class, 'deleteUser']);
+
+// PIZZAS
+Route::get('/pizzas', [PizzaController::class, 'getAllPizzas']);
+
+

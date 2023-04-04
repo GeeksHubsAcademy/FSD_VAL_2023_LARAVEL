@@ -37,6 +37,8 @@ Route::get('/pizzas', [PizzaController::class, 'getAllPizzas']);
 Route::post('/pizzas', [PizzaController::class, 'createPizza']);
 Route::put('/pizzas/{id}', [PizzaController::class, 'updatePizza']);
 Route::delete('/pizzas/{id}', [PizzaController::class, 'deletePizza']);
+Route::get('/pizzas/{id}', [PizzaController::class, 'getPizzaById']);
+
 
 
 

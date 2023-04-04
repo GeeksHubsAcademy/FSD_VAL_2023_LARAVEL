@@ -128,7 +128,7 @@ class PizzaController extends Controller
     public function deletePizza(Request $request, $id)
     {
         try {
-            
+
             Pizza::destroy($id);
 
             // otra manera de hacerlo
@@ -142,6 +142,35 @@ class PizzaController extends Controller
                 200
             );
 
+        } catch (\Throwable $th) {
+            return response()->json(
+                [
+                    "success" => false,
+                    "message" => $th->getMessage()
+                ],
+                500
+            );
+        }
+    }
+
+    public function getPizzaById(Request $request, $id)
+    {
+        try {
+            $pizza = Pizza::query()->find($id);
+
+            return response()->json(
+                [
+                    "success" => true,
+                    "message" => "Pizza deleted",
+                    "data" => [
+                        'id' => $pizza->id,
+                        'name' => $pizza->name,
+                        'type' => $pizza->type,
+                        'is_active' => $pizza->is_active
+                    ]
+                ],
+                200
+            );
         } catch (\Throwable $th) {
             return response()->json(
                 [

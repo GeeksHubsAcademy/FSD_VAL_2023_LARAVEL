@@ -124,4 +124,32 @@ class PizzaController extends Controller
             );
         }
     }
+
+    public function deletePizza(Request $request, $id)
+    {
+        try {
+            
+            Pizza::destroy($id);
+
+            // otra manera de hacerlo
+            // Pizza::query()->where('id', $id)->where('is_active', 0)->delete();
+
+            return response()->json(
+                [
+                    "success" => true,
+                    "message" => "Pizza deleted"
+                ],
+                200
+            );
+
+        } catch (\Throwable $th) {
+            return response()->json(
+                [
+                    "success" => false,
+                    "message" => $th->getMessage()
+                ],
+                500
+            );
+        }
+    }
 }

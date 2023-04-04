@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Sanctum\PersonalAccessToken;
 use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
@@ -72,6 +73,23 @@ class AuthController extends Controller
         return response()->json(
             $res,
             Response::HTTP_ACCEPTED
+        );
+    }
+
+    public function logout(Request $request)
+    {
+        $accessToken = $request->bearerToken();
+        // Get access token from database
+        $token = PersonalAccessToken::findToken($accessToken);
+        // Revoke token
+        $token->delete();
+        
+        return response(
+            [
+                "success" => true,
+                "message" => "Logout successfully"
+            ],
+            Response::HTTP_OK
         );
     }
 }

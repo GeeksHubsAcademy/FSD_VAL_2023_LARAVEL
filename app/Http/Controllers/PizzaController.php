@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Pizza;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
@@ -30,6 +31,8 @@ class PizzaController extends Controller
             //     "name" => $request->input('name'),
             //     "type" => $request->input('type')
             // ]);
+
+            Log::info("Create Pizza");
 
             $validator = Validator::make($request->all(), [
                 'name' => 'required | regex:/^[A-Za-z0-9]+$/',
@@ -57,10 +60,11 @@ class PizzaController extends Controller
                 200
             );
         } catch (\Throwable $th) {
+            Log::error("CREATING PIZZA: ".$th->getMessage());
             return response()->json(
                 [
                     "success" => false,
-                    "message" => $th->getMessage()
+                    "message" => "error creating pizza"
                 ],
                 500
             );

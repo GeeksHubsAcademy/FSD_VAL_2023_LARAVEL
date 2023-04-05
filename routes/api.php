@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PizzaController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -49,4 +50,11 @@ Route::group([
     ], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/profile', [AuthController::class, 'profile']);
+});
+
+// REVIEWS
+Route::group([
+    'middleware' => 'auth:sanctum'
+    ], function () {
+        Route::post('/reviews', [ReviewController::class, 'createReview']);
 });

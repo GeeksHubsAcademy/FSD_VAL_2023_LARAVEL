@@ -236,4 +236,51 @@ class PizzaController extends Controller
             );
         }
     }
+
+    public function addIngredientToPizzaId(Request $request, $id)
+    {
+        try {
+            $ingredientId = $request->input('ingredient_id');
+
+            // $pizza = DB::table('ingredient_pizza')->insert(
+            //     [
+            //         'ingredient_id' => $ingredientId,
+            //         'pizza_id' => $id
+            //     ]
+            // );
+
+            $pizza = Pizza::find($id); 
+
+            if (!$pizza) {
+                return response()->json(
+                    [
+                        "success" => false,
+                        "message" => "Pizza 404 not found"
+                    ],
+                    404
+                );
+            }
+
+            $pizza->ingredients()->attach($ingredientId);
+            $pizza->ingredients;
+
+            return response()->json(
+                [
+                    "success" => true,
+                    "data" => $pizza
+                ],
+                200
+            );
+        } catch (\Throwable $th) {
+            Log::error('Error adding ingredient to pizza: ' . $th->getMessage());
+
+            return response()->json(
+                [
+                    "success" => false,
+                    "message" => 'Error adding ingredient to pizza'
+                ],
+                500
+            );
+        }
+    }
 }

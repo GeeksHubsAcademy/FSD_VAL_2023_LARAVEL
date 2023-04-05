@@ -41,6 +41,7 @@ Route::put('/pizzas/{id}', [PizzaController::class, 'updatePizza']);
 Route::delete('/pizzas/{id}', [PizzaController::class, 'deletePizza']);
 Route::get('/pizzas/{id}', [PizzaController::class, 'getPizzaById']);
 Route::get('/pizzas/reviews/{id}', [PizzaController::class, 'getPizzaByIdWithReviews']);
+Route::get('/pizzas/ingredients/{id}', [PizzaController::class, 'getPizzaByIdWithIngredients']);
 
 // AUTH
 Route::post('/register', [AuthController::class, 'register']);

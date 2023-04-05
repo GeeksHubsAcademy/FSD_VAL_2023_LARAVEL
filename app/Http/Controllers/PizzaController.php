@@ -198,12 +198,39 @@ class PizzaController extends Controller
                 "data" => $pizzaByIdWithReviews
             ];
         } catch (\Throwable $th) {
-            Log::error('Error retrieving pizza with reviews: '.$th->getMessage());
+            Log::error('Error retrieving pizza with reviews: ' . $th->getMessage());
 
             return response()->json(
                 [
                     "success" => false,
                     "message" => $th->getMessage()
+                ],
+                500
+            );
+        }
+    }
+
+    public function getPizzaByIdWithIngredients(Request $request, $id)
+    {
+        try {
+            $pizzaWithIngredients = Pizza::query()->find($id);
+
+            $pizzaWithIngredients->ingredients;
+
+            return response()->json(
+                [
+                    "success" => true,
+                    "data" => $pizzaWithIngredients
+                ],
+                200
+            );
+        } catch (\Throwable $th) {
+            Log::error('Error retrieving pizza with ingredients: ' . $th->getMessage());
+
+            return response()->json(
+                [
+                    "success" => false,
+                    "message" => 'Error retrieving pizza with ingredients'
                 ],
                 500
             );

@@ -13,4 +13,9 @@ class Pizza extends Model
     {
         return $this->hasMany(Review::class);
     }
+
+    public function ingredients()
+    {
+        return $this->belongsToMany(Ingredient::class);
+    }
 }

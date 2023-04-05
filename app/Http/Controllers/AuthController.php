@@ -135,4 +135,18 @@ class AuthController extends Controller
             );
         }
     }
+
+    public function profile()
+    {
+        $user = auth()->user();
+
+        return response(
+            [
+                "success" => true,
+                "message" => "User profile get succsessfully",
+                "data" => $user
+            ],
+            Response::HTTP_OK
+        );
+    }
 }

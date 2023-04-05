@@ -14,7 +14,7 @@ class PizzaController extends Controller
     public function getAllPizzas()
     {
         // ToDo manejo de errores
-        $pizzas = Pizza::query()->get();
+        $pizzas = Pizza::query()->get;
 
 
 
@@ -60,7 +60,7 @@ class PizzaController extends Controller
                 200
             );
         } catch (\Throwable $th) {
-            Log::error("CREATING PIZZA: ".$th->getMessage());
+            Log::error("CREATING PIZZA: " . $th->getMessage());
             return response()->json(
                 [
                     "success" => false,
@@ -78,36 +78,36 @@ class PizzaController extends Controller
                 'name' => 'regex:/^[A-Za-z0-9]+$/',
                 'type' => [
                     Rule::in(['fina', 'pan_pizza', 'original']),
-                ],                
+                ],
             ]);
-            
+
             if ($validator->fails()) {
                 return response()->json($validator->errors(), 400);
-            }            
-            
+            }
+
             $pizza = Pizza::find($id);
 
-            if(!$pizza) {
+            if (!$pizza) {
                 return response()->json(
                     [
                         "success" => true,
                         "message" => "Pizza doesn't exists",
                     ],
                     404
-                ); 
+                );
             }
 
             $name = $request->input('name');
             $type = $request->input('type');
 
-            if(isset($name)) {
+            if (isset($name)) {
                 $pizza->name = $name;
             }
 
-            if(isset($type)) {
+            if (isset($type)) {
                 $pizza->type = $type;
             }
-            
+
             $pizza->save();
 
             return response()->json(
@@ -145,7 +145,6 @@ class PizzaController extends Controller
                 ],
                 200
             );
-
         } catch (\Throwable $th) {
             return response()->json(
                 [
@@ -176,6 +175,31 @@ class PizzaController extends Controller
                 200
             );
         } catch (\Throwable $th) {
+            return response()->json(
+                [
+                    "success" => false,
+                    "message" => $th->getMessage()
+                ],
+                500
+            );
+        }
+    }
+
+    public function getPizzaByIdWithReviews(Request $request, $id)
+    {
+        // ToDo manejo de errores
+        try {
+            // $pizzaByIdWithReviews = Pizza::query()->find($id)->reviews;
+
+            $pizzaByIdWithReviews = Pizza::with(['reviews', 'reviews.user'])->find($id);
+
+            return [
+                "success" => true,
+                "data" => $pizzaByIdWithReviews
+            ];
+        } catch (\Throwable $th) {
+            Log::error('Error retrieving pizza with reviews: '.$th->getMessage());
+
             return response()->json(
                 [
                     "success" => false,

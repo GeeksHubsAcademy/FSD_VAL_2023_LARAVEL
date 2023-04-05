@@ -28,21 +28,26 @@ Route::get('/', function () {
 });
 
 
-// USERS
+// USERS examples without code
 Route::get('/users', [UserController::class, 'getUsers']);
 Route::post('/users', [UserController::class, 'createUser']);
 Route::put('/users', [UserController::class, 'updateUser']);
 Route::delete('/users', [UserController::class, 'deleteUser']);
 
 // PIZZAS
+Route::group([
+    'middleware' => 'auth:sanctum'
+], function () {
+    Route::post('/pizzas', [PizzaController::class, 'createPizza']);
+    Route::put('/pizzas/{id}', [PizzaController::class, 'updatePizza']);
+    Route::delete('/pizzas/{id}', [PizzaController::class, 'deletePizza']);
+    Route::post('/pizzas/add-ingredient/{id}', [PizzaController::class, 'addIngredientToPizzaId']);
+});
+
 Route::get('/pizzas', [PizzaController::class, 'getAllPizzas']);
-Route::post('/pizzas', [PizzaController::class, 'createPizza']);
-Route::put('/pizzas/{id}', [PizzaController::class, 'updatePizza']);
-Route::delete('/pizzas/{id}', [PizzaController::class, 'deletePizza']);
 Route::get('/pizzas/{id}', [PizzaController::class, 'getPizzaById']);
 Route::get('/pizzas/reviews/{id}', [PizzaController::class, 'getPizzaByIdWithReviews']);
 Route::get('/pizzas/ingredients/{id}', [PizzaController::class, 'getPizzaByIdWithIngredients']);
-Route::post('/pizzas/add-ingredient/{id}', [PizzaController::class, 'addIngredientToPizzaId']);
 
 // AUTH
 Route::post('/register', [AuthController::class, 'register']);
@@ -50,7 +55,7 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::group([
     'middleware' => ['auth:sanctum', 'isAdmin']
-    ], function () {
+], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/profile', [AuthController::class, 'profile']);
 });
@@ -58,6 +63,6 @@ Route::group([
 // REVIEWS
 Route::group([
     'middleware' => 'auth:sanctum'
-    ], function () {
-        Route::post('/reviews', [ReviewController::class, 'createReview']);
+], function () {
+    Route::post('/reviews', [ReviewController::class, 'createReview']);
 });

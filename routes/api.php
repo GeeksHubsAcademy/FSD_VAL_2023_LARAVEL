@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ExampleMailController;
 use App\Http\Controllers\PizzaController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
@@ -66,3 +67,5 @@ Route::group([
 ], function () {
     Route::post('/reviews', [ReviewController::class, 'createReview']);
 });
+
+Route::get('/send-email-example', [ExampleMailController::class, 'sendExampleEmail']);

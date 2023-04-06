@@ -14,11 +14,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\User::factory(10)->create();
         $this->call([
+            RoleSeeder::class,
             PizzaSeeder::class,
         ]);
-
-        \App\Models\Review::factory(15001)->create();
+        
+        \App\Models\User::factory(10)->create();
+        \App\Models\Review::factory(150)->create();
     }
 }
